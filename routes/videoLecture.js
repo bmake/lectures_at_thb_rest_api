@@ -2,6 +2,7 @@ const fs = require('fs')
 const axios = require('axios')
 const querystring = require('querystring')
 const path = require('path')
+const fuseki_url = require(path.join(__dirname, '..','util', 'helperFunctions')).production_fuseki_url
 
 module.exports = app => {
   const extractValues = require(path.join(__dirname,'../util/helperFunctions')).extractValues
@@ -17,7 +18,7 @@ module.exports = app => {
           languageRegExp,
           querystring.escape(request.header('Accept-Language')))
         parameterizedVideoLectureQuery = parameterizedVideoLectureQuery.replace('%videoLecture%', querystring.escape(request.params.IRI))
-        const videoLectureResult = await axios.get('http://localhost:3030/lectures_at_thb/query', {
+        const videoLectureResult = await axios.get(fuseki_url, {
           params: {
             query: parameterizedVideoLectureQuery
           }
@@ -27,7 +28,7 @@ module.exports = app => {
           languageRegExp,
           querystring.escape(request.header('Accept-Language')))
         parameterizedVideoObjectDurationQuery = parameterizedVideoObjectDurationQuery.replace('%videoLecture%', querystring.escape(request.params.IRI))
-        const videoObjectDurationResult = await axios.get('http://localhost:3030/lectures_at_thb/query', {
+        const videoObjectDurationResult = await axios.get(fuseki_url, {
           params: {
             query: parameterizedVideoObjectDurationQuery
           }
@@ -52,7 +53,6 @@ module.exports = app => {
           })
         }
       } catch(error) {
-        console.log(error)
         if (typeof error.response === 'undefined' || error.response.status === 404) {
           sendResponse(response, 503, 'Service Unavailable', null)
         } else {
@@ -65,7 +65,7 @@ module.exports = app => {
   app.get('/v1/videoLecture/module/:moduleIRI', (request, response) => {
     const query = fs.readFileSync('queries/videoLectureByModuleIRI.rq', 'utf8')
     const parameterizedQuery = query.replace('%module%', querystring.escape(request.params.moduleIRI))
-    axios.get('http://localhost:3030/lectures_at_thb/query', {
+    axios.get(fuseki_url, {
       params: {
         query: parameterizedQuery
       }
@@ -94,7 +94,7 @@ module.exports = app => {
       languageRegExp,
       querystring.escape(request.header('Accept-Language')))
     parameterizedQuery = parameterizedQuery.replace('%videoLecture%', querystring.escape(request.params.videoLectureIRI))
-    axios.get('http://localhost:3030/lectures_at_thb/query', {
+    axios.get(fuseki_url, {
       params: {
         query: parameterizedQuery
       }
@@ -109,10 +109,10 @@ module.exports = app => {
         }
       })
       .catch(function (error) {
-        if (error.response.status === 404) {
+        if (typeof error.response === 'undefined' || error.response.status === 404) {
           sendResponse(response, 503, 'Service Unavailable', null)
         } else {
-          sendResponse(response, error.response.status, error.response.message, null)
+          sendResponse(response, error.response.status, error.response.statusText, null)
         }
       })
   })

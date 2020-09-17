@@ -2,6 +2,7 @@ const fs = require('fs')
 const axios = require('axios')
 const querystring = require('querystring')
 const path = require('path')
+const fuseki_url = require(path.join(__dirname, '..','util', 'helperFunctions')).production_fuseki_url
 
 module.exports = app => {
   const extractValues = require(path.join(__dirname,'../util/helperFunctions')).extractValues
@@ -16,7 +17,7 @@ module.exports = app => {
       parameterizedQuery = parameterizedQuery.replace(
           '%department%',
           querystring.escape(request.params.collegeOrUniversityIRI))
-      axios.get('http://localhost:3030/lectures_at_thb/query', {
+      axios.get(fuseki_url, {
         params: {
           query: parameterizedQuery
         }
@@ -31,10 +32,10 @@ module.exports = app => {
           }
         })
         .catch(function (error) {
-          if (error.response.status === 404) {
+          if (typeof error.response === 'undefined' || error.response.status === 404) {
             sendResponse(response, 503, 'Service Unavailable', null)
           } else {
-            sendResponse(response, error.response.status, error.response.message, null)
+            sendResponse(response, error.response.status, error.response.statusText, null)
           }
         })
     })
