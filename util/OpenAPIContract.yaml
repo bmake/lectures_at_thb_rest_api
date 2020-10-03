@@ -1,0 +1,323 @@
+openapi: 3.0.1
+info:
+  title: eLectures@THB API
+  description: This is the REST API serving semantical information of video lectures
+    for eLectures@THB. You can find out more about it at at [electures.th-brandenburg.de](http://electures.th-brandenburg.de)
+  contact:
+    email: bmake@th-brandenburg.de
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: eLectures@THB on GitHub
+  url: https://github.com/bmake/lectures_at_thb
+servers:
+  - url: http://localhost:3000/v1
+paths:
+  /collegeOrUniversity:
+    get:
+      tags:
+        - Department
+      summary: Returns all university departments
+      operationId: getAllDepartments
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: language code according to ISO 639-1
+          required: true
+          schema:
+            type: string
+            enum:
+              - en
+              - de
+      responses:
+        200:
+          description: Success!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CollegeOrUniversity'
+        500:
+          description: Internal Server Error!
+          content: {}
+  /studyProgram/collegeOrUniversity/{collegeOrUniversityIRI}:
+    get:
+      tags:
+        - Study Program
+      summary: Returns all study programs of a given department
+      operationId: getAllStudyProgramsOfDepartment
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: language code according to ISO 639-1
+          required: true
+          schema:
+            type: string
+            enum:
+              - en
+              - de
+        - name: collegeOrUniversityIRI
+          in: path
+          description: department abbreviation
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudyProgram'
+        500:
+          description: Internal Server Error!
+          content: {}
+  /module/studyProgram/{studyProgramIRI}:
+    get:
+      tags:
+        - Module
+      summary: Returns all modules of a given study program
+      operationId: getAllModulesOfStudyProgram
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: language code according to ISO 639-1
+          required: true
+          schema:
+            type: string
+            enum:
+              - en
+              - de
+        - name: studyProgramIRI
+          in: path
+          description: study program abbreviation
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Module'
+        500:
+          description: Internal Server Error!
+          content: {}
+  /videoLecture/module/{moduleIRI}:
+    get:
+      tags:
+        - Video Lecture
+      summary: Returns the local IRIs of all video lectures of a given module
+      operationId: getAllVideoLecturesOfModule
+      parameters:
+        - name: moduleIRI
+          in: path
+          description: module abbreviation
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideoLecture/properties/iri'
+        500:
+          description: Internal Server Error!
+          content: {}
+  /videoLecture/{videoLectureIRI}:
+    get:
+      tags:
+        - Video Lecture
+      summary: Returns all information about a given video lecture
+      operationId: getVideoLectureDetails
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: language code according to ISO 639-1
+          required: true
+          schema:
+            type: string
+            enum:
+              - en
+              - de
+        - name: videoLectureIRI
+          in: path
+          description: video lecture abbreviation
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Query successful!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoLecture'
+        500:
+          description: Internal Server Error!
+          content: {}
+  /videoLecture/{videoLectureIRI}/videoObjects:
+    get:
+      tags:
+        - Video Lecture
+      summary: Returns information about all sections of a a given video lecture
+      operationId: getVideoObjectsOfVideoLecture
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: language code according to ISO 639-1
+          required: true
+          schema:
+            type: string
+            enum:
+              - en
+              - de
+        - name: videoLectureIRI
+          in: path
+          description: video lecture abbreviation
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Query successful!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoObject'
+        500:
+          description: Internal Server Error!
+          content: {}
+components:
+  schemas:
+    VideoLecture:
+      required:
+        - about
+        - description
+        - iri
+        - keywords
+        - name
+        - thumbnail
+        - url
+      type: object
+      properties:
+        iri:
+          type: string
+          example: AHPM
+        name:
+          type: string
+          example: AHPM
+        description:
+          type: string
+          example: This short lecture gives an introduction to the method of Analytic
+            Hierarchy Process (AHP). The six steps of the AHP are presented in a brief
+            tutorial. To demonstrate the range of applications of AHP, examples from
+            three different fields of applications follow. The lecture concludes with
+            a motivation for using AHP and identifies relevant sources for further
+            study.
+        about:
+          type: string
+          example: WIB_AAIT
+        thumbnail:
+          type: string
+          example: AHP_thn
+        url:
+          type: string
+          example: http://univera.de/FHB/fbwTube/?id=SCIS4
+        keywords:
+          type: array
+          example:
+            - Analytic Hierarchy Process
+            - AHP
+            - AHP Application Examples
+            - AHP Tutorial
+            - Reasons for Using AHP
+            - AHP Sources
+            - criterion
+            - reliability
+            - pairwise comparison
+            - mathematical matrix
+          items:
+            type: string
+    CollegeOrUniversity:
+      required:
+        - iri
+        - name
+      type: object
+      properties:
+        iri:
+          type: string
+          example: THB_FBI
+        name:
+          type: string
+          example: BUAS - Department of Computer and Media Science
+    StudyProgram:
+      required:
+        - iri
+        - name
+      type: object
+      properties:
+        iri:
+          type: string
+          example: WIB
+        name:
+          type: string
+          example: Bachelor Information Systems
+    Module:
+      required:
+        - iri
+        - name
+      type: object
+      properties:
+        iri:
+          type: string
+          example: BB410
+        name:
+          type: string
+          example: Information Systems 1 - Digitalization in Companies and Organizations
+    VideoObject:
+      required:
+        - duration
+        - headline
+        - lecturerVideoID
+        - screencastVideoID
+        - url
+        - videoSharingPlatform
+      type: object
+      properties:
+        headline:
+          type: string
+          example: Kurzbeschreibung
+        url:
+          type: string
+          example: http://univera.de/FHB/fbwTube/?id=SCIS4&chapter=0
+        duration:
+          type: integer
+          description: duration in seconds
+          format: int64
+          example: 923
+        videoSharingPlatform:
+          type: string
+          enum:
+            - Vimeo
+            - YouTube
+        lecturerVideoID:
+          type: string
+          description: id of the lecturer video on respective platform
+          example: "187947600"
+        screencastVideoID:
+          type: string
+          description: id of the screencast video on respective platform
+          example: "187947597"

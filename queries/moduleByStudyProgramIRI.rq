@@ -1,0 +1,11 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX schema: <https://schema.org/>
+PREFIX module: <https://bmake.th-brandenburg.de/module/>
+
+SELECT ?iri ?name
+WHERE {
+ ?iri a module:Module ;
+ 	  schema:isPartOf module:%studyProgram% ;
+      schema:name ?name .
+ FILTER ( lang(?name) = "%language%" )
+}
