@@ -47,10 +47,9 @@ module.exports = app => {
             seconds += parseInt(matches[2])
             return acc + seconds
           }, 0)
-          sendResponse(response, 200, null, {
-            ...videoLecture,
-            duration
-          })
+          sendResponse(response, 200, null, videoLecture.map(v => {
+            return { ...v, duration}
+          })[0])
         }
       } catch(error) {
         if (typeof error.response === 'undefined' || error.response.status === 404) {
