@@ -4,9 +4,17 @@ PREFIX vide: <https://bmake.th-brandenburg.de/vide/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX module: <https://bmake.th-brandenburg.de/module/>
 
-SELECT ?iri
+SELECT DISTINCT ?iri
 WHERE {
  VALUES ?moduleIri { module:%module% }
- ?iri a vidp:VideoLecture ;
-      	schema:about ?moduleIri .
+ {
+    ?iri a vidp:VideoLecture ;
+      	 schema:about ?moduleIri .
+ }
+ UNION
+ {
+    ?lectureSeries a vidp:LectureSeries ;
+                   schema:encodesCreativeWork ?moduleIri ;
+                   schema:hasPart ?iri .
+ }
 }
