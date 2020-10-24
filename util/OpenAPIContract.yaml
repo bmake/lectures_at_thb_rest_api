@@ -204,53 +204,65 @@ components:
   schemas:
     VideoLecture:
       required:
-        - about
-        - description
-        - iri
-        - keywords
         - name
+        - iri
+        - description
+        - about
+        - headline
+        - language
+        #- keywords
         - thumbnail
         - url
       type: object
       properties:
-        iri:
+        name:
           type: string
           example: AHPM
-        name:
+        iri:
           type: string
           example: AHPM
         description:
           type: string
           example: This short lecture gives an introduction to the method of Analytic
             Hierarchy Process (AHP). The six steps of the AHP are presented in a brief
-            tutorial. To demonstrate the range of applications of AHP, examples from
+            tutorial. To demonstrate the range of applications of AHP, exaamples from
             three different fields of applications follow. The lecture concludes with
             a motivation for using AHP and identifies relevant sources for further
             study.
         about:
           type: string
           example: WIB_AAIT
+        headline:
+          type: string
+          example: Selection Method Analytic Hierarchie Process
+        language:
+          type: string
+          example: en
         thumbnail:
           type: string
           example: AHP_thn
         url:
           type: string
           example: http://univera.de/FHB/fbwTube/?id=SCIS4
-        keywords:
-          type: array
+        #keywords:
+        #  type: array
+        #  example:
+        #    - Analytic Hierarchy Process
+        #    - AHP
+        #    - AHP Application Examples
+        #    - AHP Tutorial
+        #    - Reasons for Using AHP
+        #    - AHP Sources
+        #    - criterion
+        #    - reliability
+        #    - pairwise comparison
+        #    - mathematical matrix
+        #  items:
+        #    type: string
+        duration:
+          type: integer
           example:
-            - Analytic Hierarchy Process
-            - AHP
-            - AHP Application Examples
-            - AHP Tutorial
-            - Reasons for Using AHP
-            - AHP Sources
-            - criterion
-            - reliability
-            - pairwise comparison
-            - mathematical matrix
-          items:
-            type: string
+            3000
     CollegeOrUniversity:
       required:
         - iri
