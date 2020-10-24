@@ -3,17 +3,31 @@ PREFIX schema: <https://schema.org/>
 PREFIX vide: <https://bmake.th-brandenburg.de/vide/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?iri ?headline ?name ?description ?about ?thumbnail ?url
+SELECT DISTINCT ?name ?iri ?description ?about ?headline ?language ?thumbnail ?url ?creator ?contributors
 WHERE {
- VALUES ?iri { vide:%videoLecture% }
- ?iri a vidp:VideoLecture ;
-        schema:headline ?headline ;
-        schema:name ?name ;
-        schema:description ?description ;
-        schema:about ?about ;
-        schema:thumbnail ?t ;
-        schema:url ?url .
- ?t schema:name ?thumbnail .
- FILTER ( lang(?headline) = "%language%" )
- FILTER ( lang(?description) = "%language%" )
+  VALUES ?iri { vide:BPMN1 }
+  ?iri a vidp:VideoLecture ;
+  schema:name ?name ;
+  schema:description ?description ;
+  schema:about ?about ;
+  schema:headline ?headline ;
+  schema:inLanguage ?language ;
+  schema:thumbnail ?t ;
+  schema:url ?url .
+  ?t schema:name ?thumbnail .
+
+  ?videoObjects a schema:VideoObject ;
+                schema:isPartOf ?iri ;
+                schema:creator ?cr .
+  ?cr rdfs:label ?creator .
+  OPTIONAL {
+    SELECT (GROUP_CONCAT(?contributor; separator=" ,") as ?contributors)
+    WHERE {
+      ?videoObjects schema:isPartOf vide:BPMN1 ;
+      				schema:contributor ?co .
+      ?co rdfs:label ?contributor .
+    }
+  }
+  FILTER ( lang(?headline) = "en" )
+  FILTER ( lang(?description) = "en" )
 }
