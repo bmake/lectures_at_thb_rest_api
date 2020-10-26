@@ -5,7 +5,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT DISTINCT ?name ?iri ?description ?about ?headline ?language ?thumbnail ?url ?creator ?contributors
 WHERE {
-  VALUES ?iri { vide:BPMN1 }
+  VALUES ?iri { vide:%videoLecture% }
   ?iri a vidp:VideoLecture ;
   schema:name ?name ;
   schema:description ?description ;
@@ -23,11 +23,11 @@ WHERE {
   OPTIONAL {
     SELECT (GROUP_CONCAT(?contributor; separator=" ,") as ?contributors)
     WHERE {
-      ?videoObjects schema:isPartOf vide:BPMN1 ;
+      ?videoObjects schema:isPartOf ?iri ;
       				schema:contributor ?co .
       ?co rdfs:label ?contributor .
     }
   }
-  FILTER ( lang(?headline) = "en" )
-  FILTER ( lang(?description) = "en" )
+  FILTER ( lang(?headline) = "%language%" )
+  FILTER ( lang(?description) = "%language%" )
 }
