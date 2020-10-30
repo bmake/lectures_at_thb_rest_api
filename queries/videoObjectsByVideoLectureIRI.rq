@@ -18,5 +18,4 @@ WHERE {
              schema:propertyID ?lecturerVideoID  .
    ?screencastVideoIRI schema:name "screencast" ;
              schema:propertyID ?screencastVideoID .
- FILTER ( lang(?headline) = "%language%" )
 }

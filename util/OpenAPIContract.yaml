@@ -175,15 +175,6 @@ paths:
       summary: Returns information about all sections of a a given video lecture
       operationId: getVideoObjectsOfVideoLecture
       parameters:
-        - name: Accept-Language
-          in: header
-          description: language code according to ISO 639-1
-          required: true
-          schema:
-            type: string
-            enum:
-              - en
-              - de
         - name: videoLectureIRI
           in: path
           description: video lecture abbreviation
