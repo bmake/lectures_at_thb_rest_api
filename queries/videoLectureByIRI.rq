@@ -21,12 +21,18 @@ WHERE {
                 schema:creator ?cr .
   ?cr rdfs:label ?creator .
   OPTIONAL {
-    SELECT (GROUP_CONCAT(?contributor; separator=" ,") as ?contributors)
+    SELECT (GROUP_CONCAT(?contributor; separator=", ") as ?contributors)
     WHERE {
-      ?videoObjects schema:isPartOf ?iri ;
-      				schema:contributor ?co .
-      ?co rdfs:label ?contributor .
-    }
+      {
+        SELECT DISTINCT ?contributor
+        WHERE {
+          VALUES ?iri { vide:%videoLecture% }
+          ?videoObjects schema:isPartOf ?iri ;
+                        schema:contributor ?co .
+          ?co rdfs:label ?contributor .
+        }
+      }
+  	}
   }
   FILTER ( lang(?headline) = "%language%" )
   FILTER ( lang(?description) = "%language%" )
