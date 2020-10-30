@@ -8,6 +8,7 @@ module.exports = app => {
   const extractValues = require(path.join(__dirname,'../util/helperFunctions')).extractValues
   const sendResponse = require(path.join(__dirname,'../util/helperFunctions')).sendResponse
   const languageRegExp = new RegExp('%language%', 'g')
+  const videoLectureRegExp = new RegExp('%videoLecture%', 'g')
   const durationRegExp = new RegExp(/PT([0-9]+)M([0-9]+)S/, 'g')
 
   app.get('/v1/videoLecture/:IRI', (request, response) => {
@@ -17,7 +18,7 @@ module.exports = app => {
         let parameterizedVideoLectureQuery = videoLectureQuery.replace(
           languageRegExp,
           querystring.escape(request.header('Accept-Language')))
-        parameterizedVideoLectureQuery = parameterizedVideoLectureQuery.replace('%videoLecture%', querystring.escape(request.params.IRI))
+        parameterizedVideoLectureQuery = parameterizedVideoLectureQuery.replace(videoLectureRegExp, querystring.escape(request.params.IRI))
         const videoLectureResult = await axios.get(fuseki_url, {
           params: {
             query: parameterizedVideoLectureQuery
@@ -27,7 +28,7 @@ module.exports = app => {
         let parameterizedVideoObjectDurationQuery = videoObjectDurationQuery.replace(
           languageRegExp,
           querystring.escape(request.header('Accept-Language')))
-        parameterizedVideoObjectDurationQuery = parameterizedVideoObjectDurationQuery.replace('%videoLecture%', querystring.escape(request.params.IRI))
+        parameterizedVideoObjectDurationQuery = parameterizedVideoObjectDurationQuery.replace(videoLectureRegExp, querystring.escape(request.params.IRI))
         const videoObjectDurationResult = await axios.get(fuseki_url, {
           params: {
             query: parameterizedVideoObjectDurationQuery
@@ -89,10 +90,8 @@ module.exports = app => {
 
   app.get('/v1/videoLecture/:videoLectureIRI/videoObjects', (request, response) => {
     const query = fs.readFileSync('queries/videoObjectsByVideoLectureIRI.rq', 'utf8')
-    let parameterizedQuery = query.replace(
-      languageRegExp,
-      querystring.escape(request.header('Accept-Language')))
-    parameterizedQuery = parameterizedQuery.replace('%videoLecture%', querystring.escape(request.params.videoLectureIRI))
+    let parameterizedQuery = query.replace(videoLectureRegExp, querystring.escape(request.params.videoLectureIRI))
+    console.log(parameterizedQuery)
     axios.get(fuseki_url, {
       params: {
         query: parameterizedQuery
