@@ -8,6 +8,7 @@ SELECT ?headline ?url ?duration ?videoSharingPlatform ?lecturerVideoID ?screenca
 WHERE {
  VALUES ?iri { vide:%videoLecture% }
  ?videoPart schema:isPartOf ?iri ;
+            rdfs:label ?label ;
   			schema:headline ?headline ;
       		schema:url ?url ;
       		schema:duration ?duration ;
@@ -19,3 +20,4 @@ WHERE {
    ?screencastVideoIRI schema:name "screencast" ;
              schema:propertyID ?screencastVideoID .
 }
+ORDER BY ASC(?label)
