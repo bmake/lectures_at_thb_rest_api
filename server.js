@@ -37,6 +37,7 @@ new OpenApiValidator({
   require('./routes/studyProgram')(app)
   require('./routes/module')(app)
   require('./routes/videoLecture')(app)
+  require('./routes/vimeo')(app)
 
   // Listen for REST-Calls
   app.listen(3000, () => {

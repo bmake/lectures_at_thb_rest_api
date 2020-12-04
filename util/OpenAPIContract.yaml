@@ -175,6 +175,15 @@ paths:
       summary: Returns information about all sections of a a given video lecture
       operationId: getVideoObjectsOfVideoLecture
       parameters:
+        - name: Accept-Language
+          in: header
+          description: language code according to ISO 639-1
+          required: true
+          schema:
+            type: string
+            enum:
+              - en
+              - de
         - name: videoLectureIRI
           in: path
           description: video lecture abbreviation
@@ -191,6 +200,29 @@ paths:
         500:
           description: Internal Server Error!
           content: {}
+  /vimeo/{videoID}:
+    get:
+      tags:
+        - Video Object
+      summary: Returns infomation of given vimeo video
+      operationId: getVimeoLinks
+      parameters:
+        - name: videoID
+          in: path
+          description: video ID from Vimeo
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Query successful!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VimeoVideo'
+        500:
+          description: Internal Server Error!
+          content: {}
 components:
   schemas:
     VideoLecture:
@@ -204,6 +236,8 @@ components:
         #- keywords
         - thumbnail
         - url
+        - duration
+        - creator
       type: object
       properties:
         name:
@@ -254,6 +288,9 @@ components:
           type: integer
           example:
             3000
+        creator:
+          type: string
+          example: Prof. Dr. Vera G. Meister
     CollegeOrUniversity:
       required:
         - iri
@@ -324,3 +361,19 @@ components:
           type: string
           description: id of the screencast video on respective platform
           example: "187947597"
+    VimeoVideo:
+      required:
+        - quality
+        - url
+        - thumbnail
+      type: object
+      properties:
+        quality:
+          type: string
+          example: "720p"
+        url:
+          type: string
+          example: 'https://vod-progressive.akamaized.net/exp=1607095922~acl=%2A%2F480220084.mp4%2A~hmac=66b115433b9402351f8b7a0041ac4367f3910ec0bca36fc1594600136aa363bd/vimeo-prod-skyfire-std-us/01/1025/6/155126032/480220084.mp4'
+        thumbnail:
+          type: string
+          example: 'https://i.vimeocdn.com/video/555804356'
