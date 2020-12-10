@@ -20,6 +20,6 @@ const sendResponse = (response, status, error, result) => {
 module.exports = {
   extractValues,
   sendResponse,
-  develop_fuseki_url: 'http://localhost:3030/lectures_at_thb/query',
-  production_fuseki_url: 'http://fuseki:3030/lectures_at_thb/query'
+  developFusekiUrl: 'http://localhost:3030/lectures_at_thb/query',
+  productionFusekiUrl: 'http://fuseki:3030/lectures_at_thb/query'
 }

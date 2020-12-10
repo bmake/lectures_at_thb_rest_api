@@ -2,11 +2,11 @@ const fs = require('fs')
 const axios = require('axios')
 const querystring = require('querystring')
 const path = require('path')
-const fuseki_url = require(path.join(__dirname, '..','util', 'helperFunctions')).production_fuseki_url
+const fusekiUrl = require(path.join(__dirname, '..', 'util', 'helperFunctions')).productionFusekiUrl
 
 module.exports = app => {
-  const extractValues = require(path.join(__dirname,'../util/helperFunctions')).extractValues
-  const sendResponse = require(path.join(__dirname,'../util/helperFunctions')).sendResponse
+  const extractValues = require(path.join(__dirname, '../util/helperFunctions')).extractValues
+  const sendResponse = require(path.join(__dirname, '../util/helperFunctions')).sendResponse
   app.get('/v1/studyProgram/collegeOrUniversity/:collegeOrUniversityIRI',
     (request, response) => {
       const query = fs.readFileSync('queries/studyProgramByDepartmentIRI.rq', 'utf8')
@@ -15,9 +15,9 @@ module.exports = app => {
         languageRegExp,
         querystring.escape(request.header('Accept-Language')))
       parameterizedQuery = parameterizedQuery.replace(
-          '%department%',
-          querystring.escape(request.params.collegeOrUniversityIRI))
-      axios.get(fuseki_url, {
+        '%department%',
+        querystring.escape(request.params.collegeOrUniversityIRI))
+      axios.get(fusekiUrl, {
         params: {
           query: parameterizedQuery
         }

@@ -1,19 +1,7 @@
 # eLectures@THB REST API
-
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
-## Requirements
-- [Docker](https://www.docker.com/)
-
-## Project setup
-
-This prioject is developed at the [Brandenburg University of Applied Sciences](www.th-brandenburg.de). The API is documented with the OpenAPI standard, which can be found below. The REST API utilizes [Node.js](https://nodejs.org/) and [Express.js](https://expressjs.com/).
-This is the backend for [eLectures@THB](https://github.com/bmake/lectures_at_thb). There you can find an overview of the whole project.
-
-## OpenAPI Contract
 This is the REST API serving semantical information of video lectures for eLectures@THB. You can find out more about it at at [electures.th-brandenburg.de](http://electures.th-brandenburg.de)
 
-##### Version: 1.0.0
+## Version: 1.0.0
 
 **Contact information:**  
 bmake@th-brandenburg.de  
@@ -21,154 +9,154 @@ bmake@th-brandenburg.de
 **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 [eLectures@THB on GitHub](https://github.com/bmake/lectures_at_thb)
-#### /collegeOrUniversity
+### /collegeOrUniversity
 
-##### GET
-###### Summary:
+#### GET
+##### Summary:
 
 Returns all university departments
 
-###### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | Accept-Language | header | language code according to ISO 639-1 | Yes | string |
 
-###### Responses
+##### Responses
 
 | Code | Description |
 | ---- | ----------- |
 | 200 | Success! |
 | 500 | Internal Server Error! |
 
-#### /studyProgram/collegeOrUniversity/{collegeOrUniversityIRI}
+### /studyProgram/collegeOrUniversity/{collegeOrUniversityIRI}
 
-##### GET
-###### Summary:
+#### GET
+##### Summary:
 
 Returns all study programs of a given department
 
-###### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | Accept-Language | header | language code according to ISO 639-1 | Yes | string |
 | collegeOrUniversityIRI | path | department abbreviation | Yes | string |
 
-###### Responses
+##### Responses
 
 | Code | Description |
 | ---- | ----------- |
 | 200 | Success! |
 | 500 | Internal Server Error! |
 
-#### /module/studyProgram/{studyProgramIRI}
+### /module/studyProgram/{studyProgramIRI}
 
-##### GET
-###### Summary:
+#### GET
+##### Summary:
 
 Returns all modules of a given study program
 
-###### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | Accept-Language | header | language code according to ISO 639-1 | Yes | string |
 | studyProgramIRI | path | study program abbreviation | Yes | string |
 
-###### Responses
+##### Responses
 
 | Code | Description |
 | ---- | ----------- |
 | 200 | Success! |
 | 500 | Internal Server Error! |
 
-#### /videoLecture/module/{moduleIRI}
+### /videoLecture/module/{moduleIRI}
 
-##### GET
-###### Summary:
+#### GET
+##### Summary:
 
 Returns the local IRIs of all video lectures of a given module
 
-###### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | moduleIRI | path | module abbreviation | Yes | string |
 
-###### Responses
+##### Responses
 
 | Code | Description |
 | ---- | ----------- |
 | 200 | Success! |
 | 500 | Internal Server Error! |
 
-#### /videoLecture/{videoLectureIRI}
+### /videoLecture/{videoLectureIRI}
 
-##### GET
-###### Summary:
+#### GET
+##### Summary:
 
 Returns all information about a given video lecture
 
-###### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | Accept-Language | header | language code according to ISO 639-1 | Yes | string |
 | videoLectureIRI | path | video lecture abbreviation | Yes | string |
 
-###### Responses
+##### Responses
 
 | Code | Description |
 | ---- | ----------- |
 | 200 | Query successful! |
 | 500 | Internal Server Error! |
 
-#### /videoLecture/{videoLectureIRI}/videoObjects
+### /videoLecture/{videoLectureIRI}/videoObjects
 
-##### GET
-###### Summary:
+#### GET
+##### Summary:
 
 Returns information about all sections of a a given video lecture
 
-###### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | Accept-Language | header | language code according to ISO 639-1 | Yes | string |
 | videoLectureIRI | path | video lecture abbreviation | Yes | string |
 
-###### Responses
+##### Responses
 
 | Code | Description |
 | ---- | ----------- |
 | 200 | Query successful! |
 | 500 | Internal Server Error! |
 
-#### /vimeo/{videoID}
+### /vimeo/{videoID}
 
-##### GET
-###### Summary:
+#### GET
+##### Summary:
 
 Returns infomation of given vimeo video
 
-###### Parameters
+##### Parameters
 
 | Name | Located in | Description | Required | Schema |
 | ---- | ---------- | ----------- | -------- | ---- |
 | videoID | path | video ID from Vimeo | Yes | string |
 
-###### Responses
+##### Responses
 
 | Code | Description |
 | ---- | ----------- |
 | 200 | Query successful! |
 | 500 | Internal Server Error! |
 
-##### Models
+### Models
 
 
-##### VideoLecture
+#### VideoLecture
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -183,28 +171,28 @@ Returns infomation of given vimeo video
 | duration | integer |  | Yes |
 | creator | string |  | Yes |
 
-##### CollegeOrUniversity
+#### CollegeOrUniversity
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
 | iri | string |  | Yes |
 | name | string |  | Yes |
 
-##### StudyProgram
+#### StudyProgram
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
 | iri | string |  | Yes |
 | name | string |  | Yes |
 
-##### Module
+#### Module
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
 | iri | string |  | Yes |
 | name | string |  | Yes |
 
-##### VideoObject
+#### VideoObject
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |
@@ -215,7 +203,7 @@ Returns infomation of given vimeo video
 | lecturerVideoID | string | id of the lecturer video on respective platform | Yes |
 | screencastVideoID | string | id of the screencast video on respective platform | Yes |
 
-##### VimeoVideo
+#### VimeoVideo
 
 | Name | Type | Description | Required |
 | ---- | ---- | ----------- | -------- |

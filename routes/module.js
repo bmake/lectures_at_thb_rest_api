@@ -2,11 +2,11 @@ const fs = require('fs')
 const axios = require('axios')
 const querystring = require('querystring')
 const path = require('path')
-const fuseki_url = require(path.join(__dirname, '..','util', 'helperFunctions')).production_fuseki_url
+const fusekiUrl = require(path.join(__dirname, '..', 'util', 'helperFunctions')).productionFusekiUrl
 
 module.exports = app => {
-  const extractValues = require(path.join(__dirname,'../util/helperFunctions')).extractValues
-  const sendResponse = require(path.join(__dirname,'../util/helperFunctions')).sendResponse
+  const extractValues = require(path.join(__dirname, '../util/helperFunctions')).extractValues
+  const sendResponse = require(path.join(__dirname, '../util/helperFunctions')).sendResponse
   app.get('/v1/module/studyProgram/:studyProgramIRI',
     (request, response) => {
       const query = fs.readFileSync('queries/moduleByStudyProgramIRI.rq', 'utf8')
@@ -17,7 +17,7 @@ module.exports = app => {
       parameterizedQuery = parameterizedQuery.replace(
         '%studyProgram%',
         querystring.escape(request.params.studyProgramIRI))
-      axios.get(fuseki_url, {
+      axios.get(fusekiUrl, {
         params: {
           query: parameterizedQuery
         }

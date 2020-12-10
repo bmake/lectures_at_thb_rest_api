@@ -4,7 +4,7 @@ const cors = require('cors')
 const app = express()
 const OpenApiValidator = require('express-openapi-validator').OpenApiValidator
 const apicache = require('apicache')
-apicache.options({appendKey: (req, res) => req.header('Accept-Language')})
+apicache.options({ appendKey: (req, res) => req.header('Accept-Language') })
 const cache = apicache.middleware
 const onlyStatus200 = (request, response) => response.statusCode === 200
 const cacheSuccesses = cache('5 minutes', onlyStatus200)

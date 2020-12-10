@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: eLectures@THB API
+  title: eLectures@THB REST API
   description: This is the REST API serving semantical information of video lectures
     for eLectures@THB. You can find out more about it at at [electures.th-brandenburg.de](http://electures.th-brandenburg.de)
   contact:
@@ -12,6 +12,7 @@ info:
 externalDocs:
   description: eLectures@THB on GitHub
   url: https://github.com/bmake/lectures_at_thb
+
 servers:
   - url: http://localhost:3000/v1
 paths:
