@@ -4,13 +4,12 @@ PREFIX vide: <https://bmake.th-brandenburg.de/vide/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX module: <https://bmake.th-brandenburg.de/module/>
 
-SELECT ?headline ?url ?duration ?videoSharingPlatform ?lecturerVideoID ?screencastVideoID
+SELECT ?headline ?duration ?videoSharingPlatform ?lecturerVideoID ?screencastVideoID
 WHERE {
  VALUES ?iri { vide:%videoLecture% }
  ?videoPart schema:isPartOf ?iri ;
             rdfs:label ?label ;
   			schema:headline ?headline ;
-      		schema:url ?url ;
       		schema:duration ?duration ;
       		schema:maintainer ?videoSharingPlatform ;
   			schema:additionalProperty ?lecturerVideoIRI ;
