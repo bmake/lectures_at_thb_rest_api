@@ -12,9 +12,8 @@ WHERE {
   schema:about ?about ;
   schema:headline ?headline ;
   schema:inLanguage ?language ;
-  schema:thumbnail ?t ;
-  schema:url ?url .
-  ?t schema:name ?thumbnail .
+  schema:thumbnail ?t .
+  ?t schema:identifier ?thumbnail .
 
   ?videoObjects a schema:VideoObject ;
                 schema:isPartOf ?iri ;
