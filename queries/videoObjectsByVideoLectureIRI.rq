@@ -4,20 +4,27 @@ PREFIX vide: <https://bmake.th-brandenburg.de/vide/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX module: <https://bmake.th-brandenburg.de/module/>
 
-SELECT ?headline ?url ?duration ?videoSharingPlatform ?lecturerVideoID ?screencastVideoID
+SELECT DISTINCT ?headline ?duration ?videoSharingPlatform ?playerType ?lecturerVideoID ?screencastVideoID ?podcastVideoID
 WHERE {
  VALUES ?iri { vide:%videoLecture% }
  ?videoPart schema:isPartOf ?iri ;
-            rdfs:label ?label ;
-  			schema:headline ?headline ;
-      		schema:url ?url ;
-      		schema:duration ?duration ;
-      		schema:maintainer ?videoSharingPlatform ;
-  			schema:additionalProperty ?lecturerVideoIRI ;
-     		schema:additionalProperty ?screencastVideoIRI .
-   ?lecturerVideoIRI schema:name "lecturer" ;
-             schema:propertyID ?lecturerVideoID  .
-   ?screencastVideoIRI schema:name "screencast" ;
-             schema:propertyID ?screencastVideoID .
-}
-ORDER BY ASC(?label)
+             rdfs:label ?label ;
+   			schema:headline ?headline ;
+       		schema:duration ?duration ;
+         	schema:playerType ?playerType ;
+       		schema:maintainer ?videoSharingPlatform .
+  OPTIONAL {
+     ?videoPart schema:additionalProperty ?lecturerVideoIRI ;
+      		schema:additionalProperty ?screencastVideoIRI .
+     ?lecturerVideoIRI schema:name "lecturer" ;
+              schema:propertyID ?lecturerVideoID  .
+   	?screencastVideoIRI schema:name "screencast" ;
+              schema:propertyID ?screencastVideoID .
+   }
+   OPTIONAL {
+     ?videoPart schema:additionalProperty ?podcastVideoIRI .
+   	?podcastVideoIRI schema:name "podcast" ;
+              schema:propertyID ?podcastVideoID .
+   }
+ }
+ ORDER BY ASC(?label)
