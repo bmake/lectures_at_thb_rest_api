@@ -18,13 +18,13 @@
   "homepage": "https://github.com/bmake/lectures_at_thb_rest_api#readme",
   "dependencies": {
     "apicache": "^1.5.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "body-parser": "latest",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "express-openapi-validator": "^3.17.2",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "standard": "^14.3.4",
     "swagger-ui-express": "^4.1.4",
     "yamljs": "^0.3.0"
