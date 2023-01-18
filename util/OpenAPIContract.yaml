@@ -43,6 +43,60 @@ paths:
         500:
           description: Internal Server Error!
           content: {}
+  /lecturers:
+    get:
+      tags:
+        - Lecturer
+      summary: Returns all lecturers of the university
+      operationId: getAllLecturers
+      responses:
+        200:
+          description: Success!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lecturers'
+        500:
+          description: Internal Server Error!
+          content: {}
+  /lectureCodes:
+    get:
+      tags:
+        - Video Lecture Codes
+      summary: Returns all codes / abbreviations of the video lectures
+      operationId: getAllLectureCodes
+      responses:
+        200:
+          description: Success!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LectureCodes'
+        500:
+          description: Internal Server Error!
+          content: {}
+  /thumbnails:
+    get:
+      tags:
+        - Video Lecture Thumbnails
+      summary: Returns all thumbnail links of the video lectures
+      operationId: getAllThumbnails
+      responses:
+        200:
+          description: Success!
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Thumbnails'
+        500:
+          description: Internal Server Error!
+          content: {}
   /studyProgram/collegeOrUniversity/{collegeOrUniversityIRI}:
     get:
       tags:
@@ -303,6 +357,24 @@ components:
         name:
           type: string
           example: BUAS - Department of Computer and Media Science
+    Lecturers:
+      type: object
+      properties:
+        lecturerName:
+          type: string
+          example: Vera G. Meister
+    LectureCodes:
+      type: object
+      properties:
+        videolectureLabel:
+          type: string
+          example: BPMN1
+    Thumbnails:
+      type: object
+      properties:
+        thumbnailUrl:
+          type: string
+          example: https://drive.google.com/open?id=1l4-ZYmXbOU7Hu5qgMjCQRJIHJCBIfFDJ
     StudyProgram:
       required:
         - iri
