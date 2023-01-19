@@ -13,7 +13,7 @@ externalDocs:
   description: eLectures@THB on GitHub
   url: https://github.com/bmake/lectures_at_thb
 servers:
-  - url: http://localhost:3000/v1
+  - url: http://172.16.32.212:3000/v1
 paths:
   /collegeOrUniversity:
     get:
