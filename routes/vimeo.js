@@ -13,7 +13,6 @@ module.exports = app => {
         }
       })
     .then(res => {
-      console.log(res)
       const streams = res.data.play.progressive;
       console.log(streams)
       let links = streams.map(r => {

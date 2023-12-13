@@ -41,6 +41,7 @@ new OpenApiValidator({
   require('./routes/lecturers')(app)
   require('./routes/lectureCodes')(app)
   require('./routes/thumbnails')(app)
+  require('./routes/subtitle')(app)
 
   // Listen for REST-Calls
   app.listen(3000, () => {
