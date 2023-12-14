@@ -1,5 +1,6 @@
 const axios = require('axios')
 const path = require('path')
+const fs = require('fs')
 
 module.exports = app => {
   const sendResponse = require(path.join(__dirname, '../util/helperFunctions')).sendResponse
@@ -27,7 +28,12 @@ module.exports = app => {
           if(res.toString() === '') {
             sendResponse(response, 404, 'No subtitle was found!', null)
           } else {
-            sendResponse(response, 200, null, res.data)
+            fs.writeFile('/subtitles/' + request.params.videoID + '.vtt', res.data, err => {
+              if (err) {
+                console.error(err);
+              }
+            });
+            sendResponse(response, 200, null, 'file written successfully')
           }
           })
         .catch(function (error) {
